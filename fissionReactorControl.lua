@@ -1,5 +1,6 @@
 -- Mekanism Fission Reactor Control System by Gragma
 -- v72825
+-- Recommended for use with 3x2 advanced monitor
 
 local REACTOR_NAME = ""
 local LOW_COOLANT_PERCENT_THRESHOLD = 0.5
@@ -12,8 +13,8 @@ local HIGH_TEMPERATURE_THRESHOLD = 1700
 local EMERGENCY_ON_LOW_FUEL = false
 local EMERGENCY_ON_HIGH_HEATED_COOLANT = false
 
-
 local reactor
+local monitor
 local coolant_percent
 local coolant_type
 local fuel_percent
@@ -73,14 +74,19 @@ local function isEmergency()
     return false
 end
 
+
+-- Initializing static monitor elements, startup terminal text
+term.setBackgroundColor(colors.gray)
+term.clear()
+term.setTextColor(colors.green)
+term.setCursorPos(1, 1)
+term.write("|::| Gragma Industries Fission Reactor Control |::|")
+
 reactor = peripheral.find(REACTOR_NAME)
+monitor = peripheral.find("monitor")
 
-if not reactor then
-    print("No reactor found, exiting...")
-    return
-end
-
--- TODO draw static parts of the screen, eg. labels
+monitor.setBackgroundColor(colors.gray)
+monitor.clear()
 
 while true do
     -- Normal loop
